@@ -1,0 +1,10 @@
+# E7 - ImageNet-pretrained ResNet-18, 28 -> 112 upsampling inside the model
+# (motivation: Doerrich et al., Scientific Reports 2025, MedMNIST+). Needs a GPU.
+base: baseline.yaml
+name: e7_resnet18
+model:
+  name: resnet_up
+  arch: resnet18
+  pretrained: true
+  size: 112
+  renorm_imagenet: true

@@ -1,0 +1,7 @@
+# E5 - BatchNorm, two convs per block, one more block, dropout
+base: baseline.yaml
+name: e5_improved_cnn
+model:
+  name: improved_cnn
+  channels: [32, 64, 128, 256]
+  dropout: 0.3

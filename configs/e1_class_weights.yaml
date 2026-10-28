@@ -1,0 +1,6 @@
+# E1 - class-weighted cross-entropy, w_c ~ 1/n_c (mean weight 1)
+base: baseline.yaml
+name: e1_class_weights
+loss:
+  name: weighted_ce
+  weight_power: 1.0

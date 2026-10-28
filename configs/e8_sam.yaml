@@ -1,0 +1,7 @@
+# E8 - SAM on top of E2 (Rangwani et al., NeurIPS 2022). Compare against E2, not B0.
+base: e2_logit_adjusted.yaml
+name: e8_sam
+optim:
+  sam:
+    enabled: true
+    rho: 0.1

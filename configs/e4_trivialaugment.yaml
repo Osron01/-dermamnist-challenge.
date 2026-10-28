@@ -1,0 +1,5 @@
+# E4 - TrivialAugment (Mueller & Hutter, ICCV 2021)
+base: baseline.yaml
+name: e4_trivialaugment
+augment:
+  trivialaugment: true

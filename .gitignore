@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Data and large artefacts (data is downloaded by medmnist; send model.pt separately)
+data/
+*.npz
+*.pt
+*.pth
+wandb/
+mlruns/
+
+
+# PyCharm: keep shared run configurations in .run/, ignore personal settings
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# LaTeX build files
+report/*.aux
+report/*.log
+report/*.out
+report/*.synctex.gz

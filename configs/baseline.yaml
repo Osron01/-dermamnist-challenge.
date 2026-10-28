@@ -1,0 +1,36 @@
+# B0 - the starter notebook's baseline. Every other config inherits from this
+# file (`base: baseline.yaml`) and changes exactly one thing.
+# TODO (README step 1): set epochs, lr, batch size and optimiser to the
+# starter notebook's values so B0 reproduces its numbers.
+name: baseline
+
+model:
+  name: baseline_cnn
+
+data:
+  batch_size: 128
+  num_workers: 2
+  sampler: random          # random | class_balanced
+
+augment: {}                # no augmentation in the baseline
+
+loss:
+  name: ce                 # ce | weighted_ce | logit_adjusted | focal
+
+optim:
+  name: adam               # adam | adamw | sgd
+  lr: 0.001
+  weight_decay: 0.0
+  sam:
+    enabled: false
+
+schedule:
+  name: none               # none | cosine
+
+train:
+  epochs: 30
+  checkpoint: last         # last | best_val  (same rule for every variant)
+
+wandb:
+  enabled: false           # or pass --wandb on the command line
+  project: dermamnist

@@ -1,0 +1,6 @@
+# E3 - geometric augmentation: horizontal + vertical flips and 90-degree rotations
+base: baseline.yaml
+name: e3_flip_rot
+augment:
+  flip: true
+  rot90: true

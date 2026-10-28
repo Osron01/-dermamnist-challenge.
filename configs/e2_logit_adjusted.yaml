@@ -1,0 +1,6 @@
+# E2 - logit-adjusted loss / Balanced Softmax (Menon et al. ICLR 2021; Ren et al. NeurIPS 2020)
+base: baseline.yaml
+name: e2_logit_adjusted
+loss:
+  name: logit_adjusted
+  tau: 1.0

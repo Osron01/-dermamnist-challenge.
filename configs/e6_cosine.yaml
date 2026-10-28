@@ -1,0 +1,6 @@
+# E6 - cosine learning-rate schedule with a 2-epoch warm-up (Loshchilov & Hutter, ICLR 2017)
+base: baseline.yaml
+name: e6_cosine
+schedule:
+  name: cosine
+  warmup_epochs: 2
