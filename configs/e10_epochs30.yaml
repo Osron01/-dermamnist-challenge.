@@ -1,0 +1,7 @@
+# E10: train longer (30 instead of 10 epochs). The starter notes "the baseline
+# is not finished after 10 epochs", and every stage-1 val curve is still
+# rising at epoch 10. Same last-epoch checkpoint rule.
+base: baseline.yaml
+name: e10_epochs30
+train:
+  epochs: 30
