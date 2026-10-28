@@ -1,0 +1,14 @@
+# Intel (x86_64) Macs: PyTorch publishes no macOS x86_64 wheels after 2.2.2,
+# which supports Python <= 3.12. Use Python 3.11 and this file instead of
+# requirements.txt. The committed results in results/ were produced with it:
+#   python3.11 -m venv .venv && .venv/bin/pip install -r requirements-intel-mac.txt
+torch==2.2.2
+torchvision==0.17.2
+numpy==1.26.4          # torch 2.2 is built against NumPy 1.x
+medmnist==3.0.2
+scikit-learn==1.9.1
+pandas==3.0.5
+matplotlib==3.11.2
+pyyaml==6.0.3
+pytest==9.1.1
+wandb==0.31.0

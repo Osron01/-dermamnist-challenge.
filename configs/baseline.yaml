@@ -9,7 +9,7 @@ model:
 
 data:
   batch_size: 64
-  num_workers: 2
+  num_workers: 0           # 0 = load in the main process; workers re-spawn every epoch on macOS (7x slower here)
   sampler: random          # random | class_balanced
 
 augment: {}                # no augmentation in the baseline
