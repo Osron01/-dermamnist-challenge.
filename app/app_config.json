@@ -1,0 +1,26 @@
+{
+  "malignancy_flag": {
+    "threshold": 0.307,
+    "classes": [
+      "akiec",
+      "bcc",
+      "mel"
+    ],
+    "val_sensitivity": 0.903,
+    "val_flag_rate_benign": 0.306,
+    "chosen_on": "val: highest threshold flagging >= 90% of malignant images"
+  },
+  "val_metrics": {
+    "balanced_accuracy": 0.609,
+    "macro_f1": 0.505,
+    "sensitivity_per_class": {
+      "akiec": 0.52,
+      "bcc": 0.6,
+      "bkl": 0.55,
+      "df": 0.42,
+      "mel": 0.68,
+      "nv": 0.72,
+      "vasc": 0.79
+    }
+  }
+}
