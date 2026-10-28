@@ -27,3 +27,6 @@ report/*.aux
 report/*.log
 report/*.out
 report/*.synctex.gz
+
+# TensorBoard logs (rebuilt from results/ by scripts/to_tensorboard.py)
+runs/

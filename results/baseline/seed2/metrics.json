@@ -1,7 +1,7 @@
 {
   "variant": "baseline",
   "seed": 2,
-  "git_commit": "f9334e0",
+  "git_commit": "d3f6319",
   "fake_data": false,
   "device": "mps",
   "epochs": 10,
@@ -15,7 +15,7 @@
     4693,
     99
   ],
-  "minutes": 6.742752432823181,
+  "minutes": 0.786937701702118,
   "val": {
     "balanced_accuracy": 0.46166218531558106,
     "macro_f1": 0.4783793365548935,
@@ -199,7 +199,7 @@
     },
     "data": {
       "batch_size": 64,
-      "num_workers": 2,
+      "num_workers": 0,
       "sampler": "random"
     },
     "augment": {},

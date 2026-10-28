@@ -12,3 +12,4 @@ matplotlib==3.11.2
 pyyaml==6.0.3
 pytest==9.1.1
 wandb==0.31.0
+tensorboard==2.21.0

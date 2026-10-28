@@ -5,15 +5,21 @@
 
 Writes results/summary.csv and results/summary.md (paste the .md into notes,
 the .csv into the LaTeX table).
+
+A variant built on another variant (configs/e8_sam.yaml has `base:
+e2_logit_adjusted.yaml`; a post-hoc row names its `source_variant`) also gets
+a second interval against that parent, because that is the one change it makes.
 """
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
+import yaml
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
@@ -31,6 +37,16 @@ def load_runs(variant_dir: Path) -> tuple[np.ndarray | None, list[np.ndarray], l
             labels = np.load(seed_dir / "val_labels.npy")
             seeds.append(int(seed_dir.name[4:]))
     return labels, logits, seeds
+
+
+def parent_of(name: str, variant_dir: Path) -> str | None:
+    """The variant this one changes: its config's `base`, or a post-hoc row's source."""
+    cfg = REPO_ROOT / "configs" / f"{name}.yaml"
+    if cfg.exists():
+        base = (yaml.safe_load(cfg.read_text()) or {}).get("base")
+        return Path(base).stem if base else None
+    meta = next(iter(sorted(variant_dir.glob("seed*/metrics.json"))), None)
+    return json.loads(meta.read_text()).get("source_variant") if meta else None
 
 
 def main() -> None:
@@ -60,18 +76,26 @@ def main() -> None:
             assert np.array_equal(labels, y), "val labels differ between runs"
             bs = bootstrap_difference_multiseed(y, logits, base_logits, n_boot=a.n_boot)
             row.update(delta=bs["diff"], ci_low=bs["ci_low"], ci_high=bs["ci_high"])
+            parent = parent_of(name, root / name)
+            if parent and parent != a.baseline and parent in runs:
+                bp = bootstrap_difference_multiseed(y, logits, runs[parent][1], n_boot=a.n_boot)
+                row.update(parent=parent, delta_parent=bp["diff"],
+                           ci_low_parent=bp["ci_low"], ci_high_parent=bp["ci_high"])
         row.update({f"sens_{c}": s for c, s in zip(CLASS_SHORT, sens)})
         rows.append(row)
 
     df = pd.DataFrame(rows).sort_values("bal_acc_mean", ascending=False)
     df.to_csv(root / "summary.csv", index=False)
 
-    lines = ["| Variant | Seeds | Val BalAcc | Δ vs baseline [95 % CI] | Val macro-F1 |",
-             "| --- | --- | --- | --- | --- |"]
+    lines = ["| Variant | Seeds | Val BalAcc | Δ vs baseline [95 % CI] | Δ vs parent [95 % CI] | Val macro-F1 |",
+             "| --- | --- | --- | --- | --- | --- |"]
     for r in df.itertuples():
         delta = "—" if r.variant == a.baseline else f"{r.delta:+.3f} [{r.ci_low:+.3f}, {r.ci_high:+.3f}]"
+        has_parent = isinstance(getattr(r, "parent", None), str)
+        vs_parent = (f"{r.delta_parent:+.3f} [{r.ci_low_parent:+.3f}, {r.ci_high_parent:+.3f}] vs {r.parent}"
+                     if has_parent else "—")
         lines.append(f"| {r.variant} | {r.seeds} | {r.bal_acc_mean:.3f} ± {r.bal_acc_std:.3f} | {delta} | "
-                     f"{r.macro_f1_mean:.3f} ± {r.macro_f1_std:.3f} |")
+                     f"{vs_parent} | {r.macro_f1_mean:.3f} ± {r.macro_f1_std:.3f} |")
     (root / "summary.md").write_text("\n".join(lines) + "\n", encoding="utf-8")
     print("\n".join(lines))
 
