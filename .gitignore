@@ -30,3 +30,6 @@ report/*.synctex.gz
 
 # TensorBoard logs (rebuilt from results/ by scripts/to_tensorboard.py)
 runs/
+
+# Gradio cache from running the app locally
+.gradio/
