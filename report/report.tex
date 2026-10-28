@@ -39,10 +39,10 @@ comes from finding rare classes, at the price of more moles being called somethi
 \end{abstract}
 
 \section{Introduction}
-Skin cancer triage needs a classifier that finds the rare, dangerous lesions, not one that is right on the
-common harmless ones. In DermaMNIST 67\,\% of the training images are melanocytic nevi, so a model that always
+A useful skin-lesion classifier must recognise every lesion type, not only the most common one. In DermaMNIST 67\,\% of the training images are melanocytic nevi, so a model that always
 answers ``nevus'' reaches 67\,\% accuracy but finds no melanoma; its balanced accuracy (mean sensitivity over
-the seven classes) is 1/7. We therefore select and report every model by balanced accuracy.
+the seven classes) is 1/7. Balanced accuracy weights every class equally, including rare benign ones such as
+dermatofibroma, so we select and report every model by it.
 Our contributions: (i) a controlled comparison of ten single changes to the starter baseline, each with three
 seeds and a bootstrap interval; (ii) a stack of the helpful changes, chosen on validation data only;
 (iii) evidence that the imbalance correction and the pretrained network help each other.
@@ -215,10 +215,11 @@ not a clear gain, but with the logit-adjusted loss it gave the largest step: it 
 0.76 (E2 alone: 0.58), so the imbalance correction over-corrected less and macro-F1 recovered (0.509 vs.\
 0.400). Averaging the three seed models added about two points.
 
-\textbf{What did not.} TrivialAugment and the cosine schedule hurt within the fixed 10-epoch budget: strong
-augmentation slows learning, and the cosine schedule lowers the learning rate while the small CNN is still
-improving. Training three times longer (E10) did not help the small CNN, so its limit is capacity rather than
-time; a larger plain CNN (E5) was unstable across seeds (std 0.047). SAM added nothing on top of E2.
+\textbf{What did not.} TrivialAugment and the cosine schedule were clearly worse within the fixed 10-epoch
+budget. A likely reason for TrivialAugment is that strong augmentation needs more epochs; we did not test longer
+budgets for E4 or E6, so both explanations are hypotheses. Training three times longer (E10) did not help the
+small CNN, so training time is not what limits it; a larger plain CNN (E5) did not help either and was unstable
+across seeds (std 0.047). SAM added nothing on top of E2.
 
 \textbf{Trade-off and uncertainty.} The gain in balanced accuracy is bought with lower nevus sensitivity
 (0.91 to 0.73 on test): more harmless moles are flagged. Benign keratosis, actinic keratoses and basal cell
@@ -237,11 +238,12 @@ balanced accuracy from 0.448 to 0.632, mainly by finding dermatofibroma, melanom
 the cost of nevus sensitivity.
 
 \section*{AI use statement}
-% TODO (team): rewrite in your own words and make it match what you actually did.
+% TODO (team): rewrite in your own words; keep only checks you have actually done.
 We used Claude (Anthropic) through Claude Code throughout the project: it wrote most of the training,
 evaluation, export and app code, ran the experiments on our laptop, made the figures, and drafted the README
-and this report. We reviewed the code, checked that every number in this report comes from the saved results
-in our repository, and checked every reference against the original paper.
+and this report. [TODO: what the team reviewed in the code.] [TODO: confirm that the numbers were compared
+with \texttt{results/summary.csv} and \texttt{results/test/}.] [TODO: confirm that every reference was checked
+against the original paper.]
 
 \section*{Contribution statement}
 % TODO (team): who did what, 2-3 sentences.
