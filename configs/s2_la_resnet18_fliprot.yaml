@@ -1,0 +1,8 @@
+# Stage 2, step 2: step 1 + the flips and 90-degree rotations of E3. They did
+# nothing for the 16k-parameter CNN; an 11M-parameter ResNet overfits more
+# easily, so the extra variety may matter here. Compared with step 1, its parent.
+base: s1_la_resnet18.yaml
+name: s2_la_resnet18_fliprot
+augment:
+  flip: true
+  rot90: true
