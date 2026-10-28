@@ -1,0 +1,10 @@
+# Stage 2, step 1: E2 (logit-adjusted loss, best single change) + the
+# pretrained ResNet-18 of E7. Compared with E2, its parent.
+base: e2_logit_adjusted.yaml
+name: s1_la_resnet18
+model:
+  name: resnet_up
+  arch: resnet18
+  pretrained: true
+  size: 112
+  renorm_imagenet: true
