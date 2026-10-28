@@ -12,18 +12,15 @@ IMAGENET_STD = (0.229, 0.224, 0.225)
 
 
 class BaselineCNN(nn.Module):
-    """TODO (README step 1): replace the body with the starter notebook's baseline
-    CNN so that run B0 reproduces the notebook's numbers. This placeholder is a
-    plain 3-block CNN of the usual starter shape."""
+    """B0: the starter notebook's baseline CNN, unchanged (16 071 parameters)."""
 
     def __init__(self, num_classes: int = NUM_CLASSES):
         super().__init__()
         self.features = nn.Sequential(
-            nn.Conv2d(3, 32, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),   # 28 -> 14
-            nn.Conv2d(32, 64, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),  # 14 -> 7
-            nn.Conv2d(64, 128, 3, padding=1), nn.ReLU(), nn.AdaptiveAvgPool2d(1),
+            nn.Conv2d(3, 16, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),   # 28 -> 14
+            nn.Conv2d(16, 32, 3, padding=1), nn.ReLU(), nn.MaxPool2d(2),  # 14 -> 7
         )
-        self.head = nn.Linear(128, num_classes)
+        self.head = nn.Linear(32 * 7 * 7, num_classes)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         return self.head(torch.flatten(self.features(x), 1))

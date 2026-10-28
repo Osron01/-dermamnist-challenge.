@@ -1,14 +1,14 @@
 # B0 - the starter notebook's baseline. Every other config inherits from this
 # file (`base: baseline.yaml`) and changes exactly one thing.
-# TODO (README step 1): set epochs, lr, batch size and optimiser to the
-# starter notebook's values so B0 reproduces its numbers.
+# Epochs, lr, batch size and optimiser are the starter notebook's values
+# (Adam, lr 1e-3, batch 64, 10 epochs) so B0 reproduces its numbers.
 name: baseline
 
 model:
   name: baseline_cnn
 
 data:
-  batch_size: 128
+  batch_size: 64
   num_workers: 2
   sampler: random          # random | class_balanced
 
@@ -28,7 +28,7 @@ schedule:
   name: none               # none | cosine
 
 train:
-  epochs: 30
+  epochs: 10
   checkpoint: last         # last | best_val  (same rule for every variant)
 
 wandb:

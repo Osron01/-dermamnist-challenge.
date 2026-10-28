@@ -16,14 +16,11 @@ from torchvision import transforms as T
 
 from src.utils import REPO_ROOT, seed_worker
 
-# ---------------------------------------------------------------------------
-# TODO (step 1 of the README): copy MEAN and STD from the starter notebook
-# day4_challenge_starter.ipynb. They must be exactly the given values, because
-# Annika's grading script normalises the test images with them.
-# Example shape: MEAN = (0.763, 0.538, 0.561)
-# ---------------------------------------------------------------------------
-MEAN: tuple[float, float, float] | None = None
-STD: tuple[float, float, float] | None = None
+# MEAN and STD copied unchanged from the starter notebook day4_challenge_starter.ipynb
+# (channel mean / spread of the training images, R G B). They must stay exactly
+# like this, because the grading script normalises the test images with them.
+MEAN: tuple[float, float, float] | None = (0.7631, 0.5381, 0.5614)
+STD: tuple[float, float, float] | None = (0.1366, 0.1543, 0.1692)
 
 NUM_CLASSES = 7
 CLASS_NAMES = [
