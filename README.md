@@ -96,10 +96,11 @@ scripts/
   to_tensorboard.py writes the saved per-epoch histories to runs/ for TensorBoard
   describe_data.py  class counts and example-image grid (Phase A)
   check_model.py    loads an exported model.pt on CPU and scores it on val
+  app_assets.py     malignancy threshold, gallery images and model card for the app (val only)
   final_test.py     test-split evaluation, run once at the very end
 tests/              fast checks on random images (no download needed)
 notebooks/          the starter notebook, unchanged
-app/                Gradio app (from app_template.py)
+app/                Gradio app: app.py (from app_template.py), app_config.json, examples/
 report/             IEEE LaTeX report
 results/            saved val logits and metrics per run, summary tables, figures, test results
 ```
@@ -153,6 +154,20 @@ python scripts/final_test.py --models baseline.pt model.pt --i-have-frozen-the-m
 the export line above.
 
 Single run: `python -m src.train --config configs/e3_flip_rot.yaml --seed 0`
+
+### App
+
+`app/app.py` is the course's `app_template.py` (kept next to it) with four extras: the 28 × 28 view the
+model sees, all 7 class probabilities, a malignancy flag (threshold chosen on val) and an example gallery,
+plus a model-card tab. Details and Hugging Face Spaces upload: `app/README.md`.
+
+```bash
+python scripts/app_assets.py          # threshold, gallery, model-card numbers from val (needs model.pt)
+pip install -r app/requirements.txt
+python app/app.py                     # local link + public share link
+```
+
+Live demo: _Hugging Face Space link to be added_.
 
 ### Experiment tracking
 
