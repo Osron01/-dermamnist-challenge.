@@ -48,6 +48,8 @@ def main() -> None:
         m = compute_metrics(labels, logits)
         m["confusion_row_normalised"] = confusion(labels, logits).round(3).tolist()
         name = Path(path).stem
+        np.save(out_dir / f"{name}_logits.npy", logits.astype(np.float32))   # for the test-set CI
+        np.save(out_dir / "test_labels.npy", labels)
         (out_dir / f"{name}.json").write_text(json.dumps(m, indent=2), encoding="utf-8")
         sens = "  ".join(f"{c} {s:.2f}" for c, s in zip(CLASS_SHORT, m["sensitivity_per_class"]))
         print(f"{name}: test bal_acc {m['balanced_accuracy']:.4f}  macro-F1 {m['macro_f1']:.4f}\n  {sens}")
