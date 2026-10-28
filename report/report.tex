@@ -65,7 +65,7 @@ same lesion; we use the official splits as given and treat this as a limitation.
 \toprule
 label & class & train & val & test \\
 \midrule
-akiec & actinic keratoses / intraep.\ carcinoma & 228 & 33 & 66 \\
+akiec & actinic keratoses$^{\dagger}$ & 228 & 33 & 66 \\
 bcc & basal cell carcinoma & 359 & 52 & 103 \\
 bkl & benign keratosis-like lesions & 769 & 110 & 220 \\
 df & dermatofibroma & 80 & 12 & 23 \\
@@ -73,6 +73,7 @@ mel & melanoma & 779 & 111 & 223 \\
 nv & melanocytic nevi & 4\,693 & 671 & 1\,341 \\
 vasc & vascular lesions & 99 & 14 & 29 \\
 \bottomrule
+\multicolumn{5}{l}{\footnotesize $^{\dagger}$\,and intraepithelial carcinoma}
 \end{tabular}
 \end{table}
 
@@ -179,7 +180,6 @@ lesions from 0.45 to 0.93, while nevus sensitivity falls from 0.91 to 0.73; macr
 sensitivities; $\Delta$ is a paired bootstrap on the 2\,005 test images}
 \label{tab:test}
 \centering
-\resizebox{\textwidth}{!}{%
 \begin{tabular}{lcccccccccc}
 \toprule
 model & bal.\ acc. & $\Delta$ [95\,\% CI] & macro-F1 & akiec & bcc & bkl & df & mel & nv & vasc \\
@@ -187,7 +187,7 @@ model & bal.\ acc. & $\Delta$ [95\,\% CI] & macro-F1 & akiec & bcc & bkl & df & 
 baseline & 0.448 & -- & 0.479 & 0.33 & 0.55 & 0.46 & 0.09 & 0.34 & 0.91 & 0.45 \\
 final & \textbf{0.632} & +0.184 [+0.136, +0.232] & 0.500 & 0.52 & 0.50 & 0.55 & 0.57 & 0.64 & 0.73 & 0.93 \\
 \bottomrule
-\end{tabular}}
+\end{tabular}
 \end{table*}
 
 \begin{figure}[t]
